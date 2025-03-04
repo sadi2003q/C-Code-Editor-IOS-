@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var code = "//write your code here"
+    @State private var code = """
+// Write C++ code here\n#include <iostream>\nint main() {\n    std::cout << \"Hello!\";\n}
+"""
     
     @State private var output = "Output will be shown here"
     
@@ -25,19 +27,21 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button_Run
+                
+                Button_Magic
             }
+            
         }
     }
     
     
+    /// Code Editor Canvas
     private var TextEditor_Code: some View {
-        TextEditor(text: $code)
-            .font(.system(size: 18, design: .monospaced))
-            .frame(height: UIScreen.main.bounds.height*0.7)
-            .background(Color.black)
-            .foregroundStyle(.white)
+        CodeEditorView(code: $code)
+            .frame(height: UIScreen.main.bounds.height * 0.7)
     }
     
+    /// Output Section of the Code
     private var View_ShowOutput: some View {
         Text(output)
             .font(.system(size: 14, design: .monospaced))
@@ -47,9 +51,17 @@ struct ContentView: View {
             .foregroundStyle(.white)
     }
     
+    /// Run Button of the Code
     private var Button_Run: some View {
         Button("Run", systemImage: "play") {
             output="Running..."
+        }
+    }
+    
+    /// Magic Button of the Code
+    private var Button_Magic: some View {
+        Button("Code Magic") {
+            code += "\n //Magic Added"
         }
     }
 }
